@@ -20,7 +20,7 @@ import fastk
 hist = fastk.histex("/path/to/source[.hist]")
 
 # Profex
-prof = fastk.profex("/path/to/source[.hist]", read_id=1)
+prof = fastk.profex("/path/to/source[.prof]", read_id=1)
 ```
 
 ### `histex()`
