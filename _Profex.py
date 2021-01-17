@@ -1,5 +1,5 @@
 from ctypes import CDLL, POINTER, Structure, cast, c_int, c_ushort, c_char_p, c_longlong
-from typing import List
+from typing import Optional, List
 from os.path import dirname, join
 
 
@@ -13,12 +13,14 @@ lib.load_profile.restype = POINTER(Profile)
 
 
 def profex(fastk_prefix: str,
-           read_id: int) -> List[int]:
+           read_id: int,
+           K: Optional[int] = None) -> List[int]:
     """Run Profex and return the k-mer count profile of a single read.
 
     positional arguments:
       @ fastk_prefix : Prefix of the output files of FastK.
       @ read_id      : Read ID (1, 2, ...)
+      @ K            : If specified, (K-1) 0-counts are added to the beginning.
     """
     ret = lib.load_profile(c_char_p(fastk_prefix.encode('utf-8')),
                            c_longlong(read_id))
@@ -26,4 +28,4 @@ def profex(fastk_prefix: str,
              POINTER(c_ushort * ret.contents.length))[0]
     counts = [x[i] for i in range(len(x))]
     lib.free_profile(ret)
-    return counts
+    return counts if K is None else [0] * (K - 1) + counts

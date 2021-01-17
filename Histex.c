@@ -37,7 +37,7 @@ int64* load_hist(char *source, int HIST_LOW, int HIST_HGH, int UNIQUE)
   if (HIST_HGH > 0x7fff)
       HIST_HGH = 0x7fff;
 
-  //  Load histogram into "cgram"
+  //  Load histogram into "hist"
 
   H = Load_Histogram(source);
   if (H == NULL)
@@ -51,7 +51,7 @@ int64* load_hist(char *source, int HIST_LOW, int HIST_HGH, int UNIQUE)
       exit (1);
     }
 
-  Subrange_Histogram(H,HIST_LOW,HIST_HGH);
+  Modify_Histogram(H,HIST_LOW,HIST_HGH,UNIQUE);
 
   //  Generate display
 
