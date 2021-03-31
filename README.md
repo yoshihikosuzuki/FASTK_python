@@ -40,11 +40,18 @@ optional arguments:
 ### `profex()`
 
 ```
-Signature: fastk.profex(fastk_prefix: str, read_id: int) -> List[int]
+fastk.profex(
+    fastk_prefix: str,
+    read_id: int,
+    zero_padding: bool = False,
+    return_k: bool = False,
+) -> Union[List[int], Tuple[List[int], int]]
 Docstring:
 Run Profex and return the k-mer count profile of a single read.
 
 positional arguments:
   @ fastk_prefix : Prefix of the output files of FastK.
   @ read_id      : Read ID (1, 2, ...)
+  @ zero_padding : If True, add (K - 1) zero counts to the prefix.
+  @ return_k     : If True, return the value of K as well.
 ```
