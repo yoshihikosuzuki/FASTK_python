@@ -19,6 +19,7 @@
 typedef struct
   { uint16 *profile;
     int     length;
+    int     kmer;
   } Profile;
 
 static inline void mycpy(uint16 *a, uint16 *b, int n)
@@ -52,6 +53,7 @@ Profile *load_profile(char *source, int64 id)
       Fetch_Profile(P,id-1,plen,ret->profile);
     }
   ret->length = tlen;
+  ret->kmer = P->kmer;
 
   return ret;
 }
