@@ -13,6 +13,8 @@ $ python setup.py install --user
 
 ## How to use
 
+### Quick usage
+
 ```python
 import fastk
 
