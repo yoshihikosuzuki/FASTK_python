@@ -8,7 +8,7 @@ Python interface for [FASTK](https://github.com/thegenemyers/FASTK) (currently H
 $ git clone https://github.com/yoshihikosuzuki/FASTK_python
 $ cd FASTK_python
 $ make
-$ python setup.py install --user
+$ python setup.py install
 ```
 
 ## How to use
