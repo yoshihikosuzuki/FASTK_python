@@ -1,5 +1,5 @@
 from ctypes import CDLL, POINTER, Structure, cast, c_int, c_longlong, c_char_p
-from os.path import dirname, join
+from os.path import dirname, join, isfile
 from bits.util import RelCounter
 
 lib = CDLL(join(dirname(__file__), "Histex.so"))
@@ -19,6 +19,7 @@ def histex(fastk_prefix: str,
       @ [min|max]_count : Specify the range of the k-mer count.
       @ unique          : If True, return counts of unique k-mers.
     """
+    assert isfile(f"{fastk_prefix}.hist"), "No .hist file"
     cgram = lib.load_hist(c_char_p(fastk_prefix.encode('utf-8')),
                           c_int(min_count),
                           c_int(max_count),

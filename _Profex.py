@@ -1,6 +1,6 @@
 from ctypes import CDLL, POINTER, Structure, cast, c_int, c_ushort, c_char_p, c_longlong
 from typing import Union, Optional, List, Tuple
-from os.path import dirname, join
+from os.path import dirname, join, isfile
 
 
 class Profile(Structure):
@@ -25,6 +25,7 @@ def profex(fastk_prefix: str,
       @ zero_padding : If True, add (K - 1) zero counts to the prefix.
       @ return_k     : If True, return the value of K as well.
     """
+    assert isfile(f"{fastk_prefix}.prof"), "No .prof file"
     ret = lib.load_profile(c_char_p(fastk_prefix.encode('utf-8')),
                            c_longlong(read_id))
     x = cast(ret.contents.profile,

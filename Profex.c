@@ -54,7 +54,7 @@ Profile *load_profile(char *source, int64 id)
     }
   ret->length = tlen;
   ret->kmer = P->kmer;
-
+  Free_Profiles(P);
   return ret;
 }
 
