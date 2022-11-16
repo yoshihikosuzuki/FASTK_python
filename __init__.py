@@ -1,2 +1,2 @@
 from ._Histex import histex
-from ._Profex import profex
+from ._Profex import profex, profex_multi
