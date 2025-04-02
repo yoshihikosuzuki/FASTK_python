@@ -40,6 +40,9 @@ void       Modify_Histogram(Histogram *H, int low, int high, int unique);
 int        Write_Histogram(char *name, Histogram *H);
 void       Free_Histogram(Histogram *H);
 
+Histogram *Read_Histogram(FILE *f);
+int        Dump_Histogram(FILE *f, Histogram *H);
+
 
   //  K-MER TABLE
 
@@ -103,15 +106,16 @@ typedef struct
     int    nparts;   //  # of threads/parts for the profiles
     int    nreads;   //  total # of reads in data set
     int64 *nbase;    //  nbase[i] for i in [0,nparts) = id of last read in part i + 1
-    int   *nfile;    //  nfile[i] for i in [0,nparts) = stream for ".prof" file of part i
     int64 *index;    //  index[i] for i in [0,nreads) = offset in relevant part of
                      //    compressed profile for read i
+    void  *private[4]; // Private fields
   } Profile_Index;
 
 Profile_Index *Open_Profiles(char *name);
+Profile_Index *Clone_Profiles(Profile_Index *P);
 
 void Free_Profiles(Profile_Index *P);
 
-int Fetch_Profile(Profile_Index *P, int64 id, int plen, uint16 *profile);
+int64 Fetch_Profile(Profile_Index *P, int64 id, int64 plen, uint16 *profile);
 
 #endif // _LIBFASTK
