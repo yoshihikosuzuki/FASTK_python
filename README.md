@@ -1,14 +1,16 @@
 # FASTK_python
 
-Python interface for [FASTK](https://github.com/thegenemyers/FASTK) (currently Histex and Profex). Python >= 3 is required.
+Python3 interface for [FASTK](https://github.com/thegenemyers/FASTK) (currently Histex and Profex).
 
 ## How to install
 
 ```bash
 $ git clone https://github.com/yoshihikosuzuki/FASTK_python
 $ cd FASTK_python
+$ cd src/fastk
 $ make
-$ pip3 install .
+$ cd ../..
+$ pip3 install -e .
 ```
 
 ## How to use
