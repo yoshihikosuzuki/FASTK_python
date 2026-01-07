@@ -41,7 +41,7 @@ def profex_multi(
     read_ids: Sequence[int],
     zero_padding: bool = False,
     return_k: bool = False,
-) -> Generator[Union[List[int], Tuple[List[int], int]]]:
+) -> Generator[Union[List[int], Tuple[List[int], int]], None, None]:
     """Run Profex and return the k-mer count profile of a single read.
 
     positional arguments:
