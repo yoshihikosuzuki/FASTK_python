@@ -1,4 +1,6 @@
 kmer-profile
+bits
+plotly_light
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -42,11 +42,11 @@ def profex_multi(
     zero_padding: bool = False,
     return_k: bool = False,
 ) -> Generator[Union[List[int], Tuple[List[int], int]], None, None]:
-    """Run Profex and return the k-mer count profile of a single read.
+    """Profex for multiple reads.
 
     positional arguments:
       @ fastk_prefix : Prefix of the output files of FastK.
-      @ read_id      : Read ID (1, 2, ...)
+      @ read_ids     : Read IDs (1, 2, ...)
       @ zero_padding : If True, add (K - 1) zero counts to the prefix.
       @ return_k     : If True, return the value of K as well.
     """
