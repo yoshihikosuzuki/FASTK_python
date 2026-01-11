@@ -1,7 +1,7 @@
-from ctypes import CDLL, POINTER, Structure, c_char_p, c_int, c_longlong, cast
+from ctypes import CDLL, POINTER, c_char_p, c_int, c_longlong, cast
 from os.path import dirname, isfile, join
 
-import bits.util as bu
+from ._hist import Hist
 
 lib = CDLL(join(dirname(__file__), "Histex.so"))
 lib.load_hist.restype = POINTER(c_longlong)
@@ -9,7 +9,7 @@ lib.load_hist.restype = POINTER(c_longlong)
 
 def histex(
     fastk_prefix: str, min_count: int = 1, max_count: int = 100, unique: bool = False
-) -> bu.RelCounter:
+) -> Hist:
     """Run Histex and return a histogram of k-mer count frequencies.
 
     positional arguments:
@@ -17,7 +17,10 @@ def histex(
 
     optional arguments:
       @ [min|max]_count : Specify the range of the k-mer count.
-      @ unique          : If True, return counts of unique k-mers.
+      @ unique          : If True, return counts of *distinct* k-mers. That is,
+                          each unique k-mer is counted once regardless of its
+                          frequency in the reads. If False, all k-mer *instances*
+                          int the dataset are counted.
     """
     assert isfile(f"{fastk_prefix}.hist"), "No .hist file"
     cgram = lib.load_hist(
@@ -27,8 +30,6 @@ def histex(
         c_int(1 if unique else 0),
     )
     x = cast(cgram, POINTER(c_longlong * (max_count - min_count + 1)))[0]
-    hist = bu.RelCounter(
-        {j: x[i] for i, j in enumerate(range(min_count, max_count + 1))}
-    )
+    hist = [(j, x[i]) for i, j in enumerate(range(min_count, max_count + 1))]
     lib.free_hist(cgram)
-    return hist
+    return Hist(hist, min_count, max_count, unique)
